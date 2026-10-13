@@ -1,0 +1,23 @@
+# Prompt templates. TODO: refine and add few-shot examples.
+translation: |
+  Translate the following invoice text from {source_language} to English.
+  Return JSON: {{"translation": "...", "confidence": <0.0-1.0>}}
+  TEXT:
+  {text}
+field_parsing: |
+  Extract from the invoice text and return JSON with keys:
+  invoice_no, invoice_date (YYYY-MM-DD), vendor_name, po_number, currency (ISO), total_amount, tax_amount,
+  line_items[{{item_code, description, qty, unit_price, total}}]. Use null for anything missing.
+  TEXT:
+  {text}
+rag_generation: |
+  Context:
+  {context}
+
+  Question: {question}
+  Answer using only the context above.
+rag_reflection: |
+  Question: {question}
+  Context: {context}
+  Answer: {answer}
+  Return JSON: {{"relevance": x, "groundedness": y, "context_relevance": z}} (each 0.0-1.0).
